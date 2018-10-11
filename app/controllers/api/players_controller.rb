@@ -18,4 +18,9 @@ class Api::PlayersController < ApplicationController
       render json: {errors: user.errors.full_messages}, status: :bad_request
     end
   end
+
+  def show
+    @player = Player.find(params[:id])
+    render 'show.json.jbuilder'
+  end
 end
