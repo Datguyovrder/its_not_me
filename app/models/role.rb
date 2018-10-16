@@ -1,5 +1,19 @@
 class Role < ApplicationRecord
-  enum label: {seeker: 0, hider: 1, decoy: 2}
   belongs_to :round
   belongs_to :player
+  enum label: {seeker: 1, hider: 2, decoy: 3}
+
+  def assigned_role
+    case label
+    when "Seeker"
+      "1"
+
+    when "Hider"
+      "2"
+
+    when "Decoy"
+      "3"
+
+    end
+  end
 end

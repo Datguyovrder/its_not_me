@@ -1,0 +1,1 @@
+json.partial! @round, partial: 'round', as: :round
