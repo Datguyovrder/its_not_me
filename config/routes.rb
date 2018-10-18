@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
     get "/roles" => "roles#index"
 
+    get "/rounds" => "rounds#index"
     get "/rounds/:id" => "rounds#show"
 
     get "/games" => "games#index"
