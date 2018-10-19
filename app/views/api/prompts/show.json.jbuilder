@@ -1,0 +1,1 @@
+json.partial! @prompt, partial: 'prompt', as: :prompt

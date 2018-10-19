@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     post "/participations" => "participations#create"
     get "/participations/:id" => "participations#show"
 
+    get "/prompts" => "prompts#index"
+    get "/prompts/:id" => "prompts#show"
+
     get "/roles" => "roles#index"
 
     get "/rounds" => "rounds#index"

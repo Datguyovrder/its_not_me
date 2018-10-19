@@ -19,8 +19,8 @@ end
 def display_players
   # Simply displays players name, not their roles
   puts "Here Are The Players"
-  response = HTTP.get("http://localhost:3000/api/players")
-  response.parse.each do |player|
+  player_data = HTTP.get("http://localhost:3000/api/players")
+  player_data.parse.each do |player|
     puts player["name"]
   end
 end
@@ -39,7 +39,6 @@ def round
       puts "You Lose, Good Day Sir!"
     end
   end
-  # switch statement based on player roles
   # each role will call proper methods
   # MVP will last one round (future 3-5 rounds)
 end
@@ -61,8 +60,14 @@ end
 
 def decoy_screen
   # get prompts to decoys
+  puts
   puts "Here Is Your Prompt, Decoys"
-  
+  round_data= HTTP.get("http://localhost:3000/api/rounds")
+  parsed_round_data = round_data.parse
+  prompt_id = parsed_round_data[0]["prompt_id"]
+  prompt_data = HTTP.get("http://localhost:3000/api/prompts/#{prompt_id}")
+  p prompt_data.parse["message"]
+
   done = false
 
   while (!done)
@@ -83,14 +88,15 @@ def seeker_screen
   puts "Greeting Seeker!"
   puts "Please Observe The Other Players"
   puts "When They Are Done, Please Choose Who You Think Is The Hider?"
-
-
 end
 
 def seeker_guess
   puts
-  puts "Now Seeker, Who Do Did It?: "
-  choice = gets.chomp
+  print "Now Seeker, Who Done Did It?: "
+  choice = gets.chomp.to_i
 
-  return 1
+  role_data = HTTP.get("http://localhost:3000/api/roles")
+  parsed_role_data = role_data.parse
+  # p parsed_role_data
+  return parsed_role_data[choice-1]["label"] == "hider" ? 1 : 0
 end
