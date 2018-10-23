@@ -1,0 +1,1 @@
+json.partial! @role, prole: 'player', as: :role

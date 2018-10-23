@@ -3,4 +3,13 @@ class Api::RolesController < ApplicationController
     @roles = Role.all
     render 'index.json.jbuilder'
   end
+
+  def update
+    @role = Role.find(params[:id])
+
+    @role.label = params[:label] || @recipe.label
+
+    @role.save
+    render "show.json.jbuilder"
+  end
 end
