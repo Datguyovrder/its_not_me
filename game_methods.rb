@@ -18,7 +18,6 @@ def game_finder
 end
 
 def display_players
-  # Simply displays players name, not their roles
   puts "Here Are The Players"
   player_data = HTTP.get("http://localhost:3000/api/players")
   player_data.parse.each do |player|
@@ -26,76 +25,28 @@ def display_players
   end
 end
 
+def preset_roles
+  roles = ["decoy", "decoy", "hider", "seeker"]
+  for x in 1..roles.length
+    HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: roles.pop()})
+  end
+end
+
 def randomize_roles
   role_data = HTTP.get("http://localhost:3000/api/roles")
   parsed_role_data = role_data.parse
-  num_of_decoys=0
 
-  arr = ["seeker","hider","decoy","decoy"].shuffle
-
-  for x in 0...parsed_role_data.length
+  arr = ["seeker","hider","decoy","decoy"].shuffle!
+  for x in 1..parsed_role_data.length
     HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: arr.pop()}) 
   end
-
-  collection = []
-
-  for x in 0...parsed_role_data.length
-    if (parsed_role_data[x]["label"] == "decoy")
-      num_of_decoys+=1
-      collection << x
-    end
-  end
-  puts "num_of_decoys: #{num_of_decoys}"
-  puts "collection: #{collection}"
-
-  if num_of_decoys > 2
-    if (arr.index(arr.find {|h| h["label"] == "seeker"}) == -1)
-      HTTP.patch("http://localhost:3000/api/roles/#{collection.shuffle.pop().to_i}", params: {label: "hider"})
-    elsif (arr.index(arr.find {|h| h["label"] == "hider"}) == -1)
-      HTTP.patch("http://localhost:3000/api/roles/#{collection.shuffle.pop().to_i}", params: {label: "seeker"})
-    end
-  end
-
-  puts
-  p parsed_role_data
 end
 
 def who_is_hider
   role_data = HTTP.get("http://localhost:3000/api/roles")
   parsed_role_data = role_data.parse
-  
-
-  num_of_decoys=0
-
-  arr = ["seeker","hider","decoy","decoy"].shuffle
 
   for x in 0...parsed_role_data.length
-    HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: arr.pop()}) 
-  end
-
-  collection = []
-
-  for x in 0...parsed_role_data.length
-    if (parsed_role_data[x]["label"] == "decoy")
-      num_of_decoys+=1
-      collection << x
-    end
-  end
-  puts "num_of_decoys: #{num_of_decoys}"
-
-  if num_of_decoys > 2
-    if (arr.index(arr.find {|h| h["label"] == "seeker"}) == -1)
-      HTTP.patch("http://localhost:3000/api/roles/#{collection.shuffle.pop().to_i}", params: {label: "hider"})
-    elsif (arr.index(arr.find {|h| h["label"] == "hider"}) == -1)
-      HTTP.patch("http://localhost:3000/api/roles/#{collection.shuffle.pop().to_i}", params: {label: "seeker"})
-    end
-  end
-
-  parsed_role_data = parsed_role_data.sort_by { |hsh| hsh["player_id"]}
-  p parsed_role_data
-
-  for x in 0...parsed_role_data.length
-    p x
     if parsed_role_data[x]["label"] == "hider"
       return parsed_role_data[x]["player_id"]
     end
@@ -123,8 +74,6 @@ def round(input)
       puts "You Lose, Good Day Sir!"
     end
   end
-  # each role will call proper methods
-  # MVP will last one round (future 3-5 rounds)
 end
 
 def hider_screen
@@ -147,14 +96,10 @@ def rand_prompt_id
 end
 
 def decoy_screen(popped_prompt_id)
-  # get prompts to decoys
   done = false
 
   puts
   puts "Here Is Your Prompt, Decoys"
-  round_data= HTTP.get("http://localhost:3000/api/rounds")
-  # parsed_round_data = round_data.parse
-  # prompt_id = parsed_round_data[0]["prompt_id"]
   prompt_data = HTTP.get("http://localhost:3000/api/prompts/#{popped_prompt_id}")
   p prompt_data.parse["message"]
 
@@ -179,12 +124,20 @@ def seeker_screen
 end
 
 def seeker_guess
+  role_data = HTTP.get("http://localhost:3000/api/roles")
+  parsed_role_data = role_data.parse
+  p parsed_role_data
+
   puts
   print "Now Seeker, Who Done Did It?: "
   choice = gets.chomp.to_i
 
-  role_data = HTTP.get("http://localhost:3000/api/roles")
-  parsed_role_data = role_data.parse
-  parsed_role_data = parsed_role_data.sort_by { |hsh| hsh["player_id"]}
-  return parsed_role_data[choice-1]["label"] == "hider" ? 1 : 0
+  index=0
+  for x in 0...parsed_role_data.length
+    if (parsed_role_data[x]["player_id"] == choice)
+      index=x
+    end
+  end
+
+  return parsed_role_data[index]["label"] == "hider" ? 1 : 0
 end

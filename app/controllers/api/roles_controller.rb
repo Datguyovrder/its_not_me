@@ -4,6 +4,11 @@ class Api::RolesController < ApplicationController
     render 'index.json.jbuilder'
   end
 
+  def show
+    @role = Role.find(params[:id])
+    render 'show.json.jbuilder'
+  end
+
   def update
     @role = Role.find(params[:id])
 

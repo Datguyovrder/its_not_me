@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get "/prompts/:id" => "prompts#show"
 
     get "/roles" => "roles#index"
+    get "/roles/:id" => "roles#show"
     patch "/roles/:id" => "roles#update"
 
     get "/rounds" => "rounds#index"
