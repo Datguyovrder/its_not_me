@@ -42,6 +42,7 @@ end
 #   end
 # end
 
+#Role
 def who_is_hider
   role_data = HTTP.get("http://localhost:3000/api/roles")
   parsed_role_data = role_data.parse
@@ -53,6 +54,7 @@ def who_is_hider
   end
 end
 
+#Round
 def round(input)
   randomize_roles
 
@@ -76,6 +78,7 @@ def round(input)
   end
 end
 
+#Role
 def hider_screen
   puts "Please Observe The Decoys And Try To Copy What They Do!"
   done = false
@@ -95,6 +98,7 @@ def rand_prompt_id
   return (1..10).to_a.shuffle.sample(5)
 end
 
+#Role
 def decoy_screen(popped_prompt_id)
   done = false
 
@@ -114,6 +118,7 @@ def decoy_screen(popped_prompt_id)
   return 1
 end
 
+#Role
 def seeker_screen
   #seeker makes a guess on who the hider is
   # if correct seeker wins, otherwise he loses
@@ -123,7 +128,8 @@ def seeker_screen
   puts "When They Are Done, Please Choose Who You Think Is The Hider?"
 end
 
-def seeker_guess
+#Role
+def seeker_guess 
   role_data = HTTP.get("http://localhost:3000/api/roles")
   parsed_role_data = role_data.parse
   p parsed_role_data

@@ -9,12 +9,16 @@ class Api::RolesController < ApplicationController
     render 'show.json.jbuilder'
   end
 
-  def update
-    @role = Role.find(params[:id])
+  def create
+    @role = Role.new(
+      round_id: params[:id],
+      player_id: params[:id],
+      label: params[:id])
 
-    @role.label = params[:label] || @recipe.label
-
-    @role.save
-    render "show.json.jbuilder"
+    if @role.save
+      render json: {message: 'Role created successfully'}, status: :created
+    else
+      render json: {errors: user.errors.full_messages}, status: :bad_request
+    end
   end
 end
