@@ -32,15 +32,15 @@ def preset_roles
   end
 end
 
-def randomize_roles
-  role_data = HTTP.get("http://localhost:3000/api/roles")
-  parsed_role_data = role_data.parse
+# def randomize_roles
+#   role_data = HTTP.get("http://localhost:3000/api/roles")
+#   parsed_role_data = role_data.parse
 
-  arr = ["seeker","hider","decoy","decoy"].shuffle!
-  for x in 1..parsed_role_data.length
-    HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: arr.pop()}) 
-  end
-end
+#   arr = ["seeker","hider","decoy","decoy"].shuffle!
+#   for x in 1..parsed_role_data.length
+#     HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: arr.pop()}) 
+#   end
+# end
 
 def who_is_hider
   role_data = HTTP.get("http://localhost:3000/api/roles")
