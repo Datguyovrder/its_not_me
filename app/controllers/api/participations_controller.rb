@@ -1,6 +1,7 @@
 class Api::ParticipationsController < ApplicationController
   def index
-    @participations = Participation.all
+    game = Game.find(params[:id])
+    @participations = game.particiaptions
     render 'index.json.jbuilder'
   end
 

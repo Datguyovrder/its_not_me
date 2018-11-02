@@ -3,17 +3,17 @@ class Role < ApplicationRecord
   belongs_to :player
   enum label: {seeker: 1, hider: 2, decoy: 3}
 
-  valdates :player_id, uniqueness: {scope: :round_id}
+  validates :player_id, uniqueness: {scope: :round_id}
 
-  def who_is_hider
-    role_data = HTTP.get("http://localhost:3000/api/roles")
-    parsed_role_data = role_data.parse
+  def who_is_hider    
+    participaiton_data = HTTP.get("http://localhost:3000/api/games/1")
+    parsed_participaiton_data = participation_data.parse
 
-    for x in 0...parsed_role_data.length
-      if parsed_role_data[x]["label"] == "hider"
-        return parsed_role_data[x]["player_id"]
-      end
-    end
+    # for x in 0...parsed_participation_data.length
+    #   if parsed_participation_data[x]["label"] == "hider"
+    #     return parsed_role_data[x]["player_id"]
+    #   end
+    # end
   end
 
   def hider_screen

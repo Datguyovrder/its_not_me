@@ -5,10 +5,8 @@ Rails.application.routes.draw do
     get "/players/:id" => "players#show"
     delete "/players/:id" => "players#destroy"
 
-    get "/participations" => "participations#index"
     post "/participations" => "participations#create"
-    get "/participations/:id" => "participations#show"
-
+    
     get "/prompts" => "prompts#index"
     get "/prompts/:id" => "prompts#show"
 
@@ -17,12 +15,13 @@ Rails.application.routes.draw do
     get "/roles/:id" => "roles#show"
     
     get "/rounds" => "rounds#index"
-    post "/rounds" => "rounds#create"
-    get "/rounds/:id" => "rounds#show"
+    post "/rounds" => "rounds#create" #needed to create a new round in each game
+    get "/rounds/:id/rounds" => "rounds#show"
     
-
+    #index shows all games with all players participating in them
+    #show shows a specific game with all players participating in it
     get "/games" => "games#index"
-    get "/games/:id" => "games#show"
+    get '/games/:id' => "games#show
 
     post "/sessions" => "sessions#create"
   end

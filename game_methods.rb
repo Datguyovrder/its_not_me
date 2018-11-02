@@ -25,13 +25,6 @@ def display_players
   end
 end
 
-def preset_roles
-  roles = ["decoy", "decoy", "hider", "seeker"]
-  for x in 1..roles.length
-    HTTP.patch("http://localhost:3000/api/roles/#{x}", params: {label: roles.pop()})
-  end
-end
-
 # def randomize_roles
 #   role_data = HTTP.get("http://localhost:3000/api/roles")
 #   parsed_role_data = role_data.parse

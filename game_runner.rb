@@ -10,7 +10,6 @@ end
 
 prompt_id_array =  rand_prompt_id
 # p prompt_id_array 
-preset_roles
 
 round_index=1
 5.times do
