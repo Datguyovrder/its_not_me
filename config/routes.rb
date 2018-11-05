@@ -5,10 +5,11 @@ Rails.application.routes.draw do
     get "/players/:id" => "players#show"
     delete "/players/:id" => "players#destroy"
 
+    #used to assign a player to a game
     post "/participations" => "participations#create"
     
     get "/prompts" => "prompts#index"
-    get "/prompts/:id" => "prompts#show"
+    get "/prompts/:id" => "prompts#show" 
 
     get "/roles" => "roles#index"
     post "/roles" => "roles#create"
@@ -21,7 +22,8 @@ Rails.application.routes.draw do
     #index shows all games with all players participating in them
     #show shows a specific game with all players participating in it
     get "/games" => "games#index"
-    get '/games/:id' => "games#show
+    post "/games" => "games#create"
+    get '/games/:id' => "games#show"
 
     post "/sessions" => "sessions#create"
   end

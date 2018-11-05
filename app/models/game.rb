@@ -3,6 +3,23 @@ class Game < ApplicationRecord
   has_many :roles, through: :rounds
   has_many :participations
   has_many :players, through: :participations
+  
+  def welcome
+    system "clear"
+    puts "Welcome To It's Not Me!"
+    puts "The Game Where You Have To Find The Hider!"
+    puts "But Watch Out For The Decoys!"
+    puts "******************************************"
+  end
+
+  def game_finder
+    puts
+    puts "Looking For An Empty Lobby!"
+    sleep(3)
+    puts "Oh Look, Game 1 Is Empty"
+    #Futrue version will display all empty games
+    #Seeker will then start each round
+  end
 
   def new_round
     possible_roles = ["seeker","hider","decoy","decoy"].shuffle!

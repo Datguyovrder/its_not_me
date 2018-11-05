@@ -6,14 +6,15 @@ class Role < ApplicationRecord
   validates :player_id, uniqueness: {scope: :round_id}
 
   def who_is_hider    
-    participaiton_data = HTTP.get("http://localhost:3000/api/games/1")
-    parsed_participaiton_data = participation_data.parse
+    p "made it here"
+    role_data = HTTP.get("http://localhost:3000/api/games/1")
+    parsed_role_data = role_data.parse
 
-    # for x in 0...parsed_participation_data.length
-    #   if parsed_participation_data[x]["label"] == "hider"
-    #     return parsed_role_data[x]["player_id"]
-    #   end
-    # end
+    for x in 0...parsed_role_data["roles"].length
+      if data["roles"][x]["label"] == "hider"
+        return data["roles"][x]["player_id"]
+      end
+    end
   end
 
   def hider_screen
@@ -60,21 +61,20 @@ class Role < ApplicationRecord
   end
 
   def seeker_guess 
-    role_data = HTTP.get("http://localhost:3000/api/roles")
+    role_data = HTTP.get("http://localhost:3000/api/games/1")
     parsed_role_data = role_data.parse
-    p parsed_role_data
 
     puts
     print "Now Seeker, Who Done Did It?: "
     choice = gets.chomp.to_i
 
     index=0
-    for x in 0...parsed_role_data.length
-      if (parsed_role_data[x]["player_id"] == choice)
+    for x in 0...parsed_role_data["roles"].length
+      if (parsed_role_data["roles"][x]["player_id"] == choice)
         index=x
       end
     end
 
-    return parsed_role_data[index]["label"] == "hider" ? 1 : 0
-  end
+    return parsed_role_data["roles"][index]["label"] == "hider" ? 1 : 0
+    end
 end

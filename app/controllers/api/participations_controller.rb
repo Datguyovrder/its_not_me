@@ -2,6 +2,7 @@ class Api::ParticipationsController < ApplicationController
   def index
     game = Game.find(params[:id])
     @participations = game.particiaptions
+    @roles = participations.roles
     render 'index.json.jbuilder'
   end
 
@@ -11,10 +12,6 @@ class Api::ParticipationsController < ApplicationController
       player_id: params[:id])
 
     if @participation.save
-      puts "*" * 50
-      puts "player.assigned_role"
-      puts "*" * 50
-
       render json: {message: 'Participation created successfully'}, status: :created
     else
       render json: {errors: user.errors.full_messages}, status: :bad_request

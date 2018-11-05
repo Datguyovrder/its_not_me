@@ -1,12 +1,12 @@
 require 'http'
 
-def welcome
-  system "clear"
-  puts "Welcome To It's Not Me!"
-  puts "The Game Where You Have To Find The Hider!"
-  puts "But Watch Out For The Decoys!"
-  puts "******************************************"
-end
+# def welcome
+#   system "clear"
+#   puts "Welcome To It's Not Me!"
+#   puts "The Game Where You Have To Find The Hider!"
+#   puts "But Watch Out For The Decoys!"
+#   puts "******************************************"
+# end
 
 def game_finder
   puts
@@ -122,21 +122,21 @@ def seeker_screen
 end
 
 #Role
-def seeker_guess 
-  role_data = HTTP.get("http://localhost:3000/api/roles")
-  parsed_role_data = role_data.parse
-  p parsed_role_data
+# def seeker_guess 
+#   role_data = HTTP.get("http://localhost:3000/api/roles")
+#   parsed_role_data = role_data.parse
+#   p parsed_role_data
 
-  puts
-  print "Now Seeker, Who Done Did It?: "
-  choice = gets.chomp.to_i
+#   puts
+#   print "Now Seeker, Who Done Did It?: "
+#   choice = gets.chomp.to_i
 
-  index=0
-  for x in 0...parsed_role_data.length
-    if (parsed_role_data[x]["player_id"] == choice)
-      index=x
-    end
-  end
+#   index=0
+#   for x in 0...parsed_role_data.length
+#     if (parsed_role_data[x]["player_id"] == choice)
+#       index=x
+#     end
+#   end
 
-  return parsed_role_data[index]["label"] == "hider" ? 1 : 0
-end
+#   return parsed_role_data[index]["label"] == "hider" ? 1 : 0
+# end
