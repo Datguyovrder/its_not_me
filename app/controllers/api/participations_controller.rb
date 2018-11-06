@@ -9,12 +9,11 @@ class Api::ParticipationsController < ApplicationController
   def create
     @participation = Participation.new(
       game_id: params[:id],
-      player_id: params[:id])
+      player_id: params[:id],
+      organizer: params[:id])
 
     if @participation.save
-      render json: {message: 'Participation created successfully'}, status: :created
-    else
-      render json: {errors: user.errors.full_messages}, status: :bad_request
+      render 'show.json.jbuilder'
     end
   end
 
