@@ -15,7 +15,7 @@ class Api::GamesController < ApplicationController
                     )
 
     if @game.save
-      render json: {message: 'Participation created successfully'}, status: :created
+      render json: {message: 'Game created successfully'}, status: :created
     else
       render json: {errors: user.errors.full_messages}, status: :bad_request
     end
