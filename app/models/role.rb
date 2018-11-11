@@ -5,6 +5,7 @@ class Role < ApplicationRecord
 
   validates :player_id, uniqueness: {scope: :round_id}
 
+
   def who_is_hider    
     p "made it here"
     role_data = HTTP.get("http://localhost:3000/api/games/1")

@@ -1,16 +1,19 @@
 class Api::ParticipationsController < ApplicationController
+  before_action :authenticate_user, only: [:create]
+
   def index
-    game = Game.find(params[:id])
-    @participations = game.particiaptions
-    @roles = participations.roles
+    @participations = Participation.all
     render 'index.json.jbuilder'
   end
 
   def create
     @participation = Participation.new(
-      game_id: params[:id],
-      player_id: params[:id],
-      organizer: params[:id])
+                                        player_id: current_user.id,
+                                        game_id: params[:game_id],
+                                        organizer: false
+                                      )
+
+
 
     if @participation.save
       render 'show.json.jbuilder'

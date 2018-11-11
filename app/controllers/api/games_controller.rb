@@ -14,7 +14,9 @@ class Api::GamesController < ApplicationController
                       id: params[:id],
                     )
 
-    if @game.save
+    if @game.save && current_user
+      Participation.create(player_id: current_user.id, game_id: @game.id, organizer: true)
+      
       render "show.json.jbuilder"
     end
   end

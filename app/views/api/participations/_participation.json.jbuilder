@@ -1,6 +1,6 @@
 json.id participation.id
-json.player_id participation.player_id
+json.player do 
+  json.partial! participation.player, partial: 'api/players/player', as: :player
+end
 json.game_id participation.game_id
-# json.labels do
-#   json.array! participation.player.role
-# end
+json.organizer participation.organizer
