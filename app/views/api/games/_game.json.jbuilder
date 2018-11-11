@@ -6,4 +6,4 @@ json.game_round do
   json.array! game.rounds, partial: 'api/rounds/round', as: :round
 end
 # json.game_round game.rounds
-json.current_user_name current_user.name
+json.current_user_id current_user.id
