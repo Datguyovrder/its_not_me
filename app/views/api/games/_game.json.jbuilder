@@ -5,5 +5,7 @@ end
 json.game_round do
   json.array! game.rounds, partial: 'api/rounds/round', as: :round
 end
-# json.game_round game.rounds
+json.current_round_id game.current_round_id
 json.current_user_id current_user.id
+json.organizer_id game.organizer_id
+json.started game.started

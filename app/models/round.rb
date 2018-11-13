@@ -4,5 +4,8 @@ class Round < ApplicationRecord
   has_many :roles
   has_many :players, through: :roles
 
-  
+
+  def find_role_by_player_id(player_id)
+    roles.find_by(player_id: player_id).label
+  end
 end

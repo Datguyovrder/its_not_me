@@ -20,4 +20,11 @@ class Api::GamesController < ApplicationController
       render "show.json.jbuilder"
     end
   end
+
+  def start
+    @game = Game.find(params[:id])
+    @game.update(started: true)
+    @game.new_round
+    render 'show.json.jbuilder'
+  end
 end

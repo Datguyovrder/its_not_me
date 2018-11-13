@@ -22,11 +22,37 @@ class Game < ApplicationRecord
   end
 
   def new_round
-    possible_roles = ["seeker","hider","decoy","decoy"].shuffle!
-    # last_roles = rounds.last.roles if rounds.any? #this could lead to not repeating the last roles
-    round = Round.create(game_id: id, prompt_id: Prompt.all.sample.id)
-    players.each_with_index do |player, index|
-      Role.create(player_id: player.id, label: possible_roles[index])
-    end
+    people_count = participations.count 
+
+      prompt_id = Prompt.all.sample.id
+      current_game_rounds = rounds.count
+
+      created_round = Round.create(
+                          game_id: id,
+                          prompt_id: prompt_id,
+                          game_round: current_game_rounds + 1
+                          )
+
+      labels = ["hider", "seeker"]
+
+      (people_count - 2).times do 
+        labels << "decoy"
+      end
+
+      labels.shuffle!
+
+      players.each_with_index do |player, index|
+        Role.create(player_id: player.id, round_id: created_round.id, label: labels[index])
+      end
+
+      created_round
+  end
+
+  def current_round_id
+    rounds.last.id if rounds.any?
+  end
+
+  def organizer_id
+    participations.find_by(organizer: true) && participations.find_by(organizer: true).player_id
   end
 end
