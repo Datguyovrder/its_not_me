@@ -1,6 +1,7 @@
 json.id round.id
 json.game_id round.game_id
 json.game_round round.game_round
+json.prompt_id round.prompt.id
 json.prompt_message round.prompt.message
 
 json.current_player_id current_user.id

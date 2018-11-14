@@ -6,6 +6,6 @@ class Round < ApplicationRecord
 
 
   def find_role_by_player_id(player_id)
-    roles.find_by(player_id: player_id).label
+    roles.find_by(player_id: player_id).label if roles.find_by(player_id: player_id)
   end
 end

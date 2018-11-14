@@ -13,8 +13,6 @@ class Api::ParticipationsController < ApplicationController
                                         organizer: false
                                       )
 
-
-
     if @participation.save
       render 'show.json.jbuilder'
     end
